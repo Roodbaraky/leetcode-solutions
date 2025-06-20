@@ -1,4 +1,4 @@
-// Last updated: 20/06/2025, 10:06:06
+// Last updated: 20/06/2025, 10:07:59
 class Solution {
     public int romanToInt(String s) {
        //Iterate through string backwards
@@ -17,12 +17,15 @@ class Solution {
        charMap.put('M',1000);
         int total =0;
        for (int i =0 ; i<s.length();i++){
-        if(i<s.length()-1&&charMap.get(s.charAt(i))<charMap.get(s.charAt(i+1))){
-            total+=charMap.get(s.charAt(i+1))-charMap.get(s.charAt(i));
+         int curr = charMap.get(s.charAt(i));
+            int next = (i < s.length() - 1) ? charMap.get(s.charAt(i + 1)) : 0;
+
+        if(i<s.length()-1&&curr<next){
+            total+=next-curr;
             i++;
         }
         else{
-            total+=charMap.get(s.charAt(i));
+            total+=curr;
         }
     }
        return total; 
