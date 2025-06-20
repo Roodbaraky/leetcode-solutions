@@ -1,48 +1,36 @@
-// Last updated: 20/06/2025, 09:29:57
+// Last updated: 20/06/2025, 09:57:40
 class Solution {
-    public double findMedianSortedArrays(int[] A, int[] B) {
-        int m = A.length;
-        int n = B.length;
+    public int romanToInt(String s) {
+       //Iterate through string backwards
+       //Check char against char map -> add value to current value
+       //Look ahead to previous to check for I (VX), X (LC), C (DM)
+       //-> adjust value
 
-        // Always binary search the smaller array
-        if (m > n) {
-            return findMedianSortedArrays(B, A);
+       Map<String, Integer> charMap = new HashMap<>();
+
+       charMap.put("I",1);
+       charMap.put("IV",4);
+       charMap.put("IX",9);
+       charMap.put("V", 5);
+       charMap.put("X", 10);
+       charMap.put("XL",40);
+       charMap.put("XC",90);
+       charMap.put("L",50);
+       charMap.put("C",100);
+       charMap.put("CD",400);
+       charMap.put("CM",900);
+       charMap.put("D", 500);
+       charMap.put("M",1000);
+        int total =0;
+       for (int i = s.length()-1; i>-1;i--){
+        if(i>0&&charMap.containsKey(""+s.charAt(i-1)+s.charAt(i))){
+            total+= charMap.get(""+s.charAt(i-1)+s.charAt(i));
+            i--;
         }
-
-        if (m == 0) {
-            if (n % 2 == 1) return B[n / 2];
-            return (B[n / 2 - 1] + B[n / 2]) / 2.0;
+        else{
+            total+= charMap.get(""+s.charAt(i));
         }
-
-        int low = 0;
-        int high = m;
-
-        while (low <= high) {
-            int i = (low + high) / 2;
-            int j = (m + n + 1) / 2 - i;
-
-            int maxLeftA  = (i == 0) ? Integer.MIN_VALUE : A[i - 1];
-            int minRightA = (i == m) ? Integer.MAX_VALUE : A[i];
-
-            int maxLeftB  = (j == 0) ? Integer.MIN_VALUE : B[j - 1];
-            int minRightB = (j == n) ? Integer.MAX_VALUE : B[j];
-
-            if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
-                if ((m + n) % 2 == 0) {
-                    return (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2.0;
-                } else {
-                    return Math.max(maxLeftA, maxLeftB);
-                }
-            } else if (maxLeftA > minRightB) {
-                high = i - 1;
-            } else {
-                low = i + 1;
-            }
-        }
-
-        throw new IllegalArgumentException("Input arrays not sorted or invalid");
+       }
+       return total; 
     }
-
-
-
 }
