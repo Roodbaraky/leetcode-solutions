@@ -1,4 +1,4 @@
-// Last updated: 20/06/2025, 10:07:59
+// Last updated: 20/06/2025, 10:10:58
 class Solution {
     public int romanToInt(String s) {
        //Iterate through string backwards
@@ -20,7 +20,7 @@ class Solution {
          int curr = charMap.get(s.charAt(i));
             int next = (i < s.length() - 1) ? charMap.get(s.charAt(i + 1)) : 0;
 
-        if(i<s.length()-1&&curr<next){
+        if(curr<next){
             total+=next-curr;
             i++;
         }
